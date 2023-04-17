@@ -1,4 +1,4 @@
-document.getElementById("btn").addEventListener("click", function() {
+document.getElementById("btn-testicule").addEventListener("click", function() {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     // Récupération de l'onglet actif
     var activeTab = tabs[0];

@@ -6,5 +6,14 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "scripting", "storage"],
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": [
+        "https://developer.chrome.com/docs/extensions/*",
+        "https://developer.chrome.com/docs/webstore/*"
+      ]
+    }
+  ]
 }

@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT email object auto writer",
+  "version": "1.0",
+  "description": "Ecrivez votre objet d'email automatiquement grâce à chatGPT",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["activeTab"]
+}

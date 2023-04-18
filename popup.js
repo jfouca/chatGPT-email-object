@@ -1,17 +1,21 @@
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById("btn-testicule").addEventListener("click", function() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      // Récupération de l'onglet actif
-      var activeTab = tabs[0];
+document.addEventListener("DOMContentLoaded", function() {
+  // Récupération du formulaire
+  const form = document.getElementById("api-key-form");
 
-      // Envoi d'un message à l'onglet actif pour récupérer les données du message en cours de rédaction
-      chrome.tabs.sendMessage(activeTab.id, { action: "getDraftData" }, function(draftData) {
-        // Modification de l'objet du message en cours de rédaction
-        draftData.subject = "Nouvel objet du message";
+  // Récupération de la clé API saisie par l'utilisateur
+  const apiKeyInput = document.getElementById("api-key");
 
-        // Envoi d'un message à l'onglet actif pour mettre à jour le message en cours de rédaction
-        chrome.tabs.sendMessage(activeTab.id, { action: "updateDraftData", draftData: draftData });
-      });
-    });
+  // Ecouteur d'événement sur le formulaire pour stocker la clé API saisie par l'utilisateur
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const apiKey = apiKeyInput.value;
+    chrome.storage.local.set({apiKey: apiKey}, function() {});
   });
-}
+
+  // Récupération de la clé API depuis le stockage local et pré-remplissage du champ correspondant dans le formulaire
+  chrome.storage.local.get(["apiKey"], function(result) {
+    if (result.apiKey) {
+      apiKeyInput.value = result.apiKey;
+    }
+  });
+});

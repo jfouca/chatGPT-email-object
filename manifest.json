@@ -2,18 +2,35 @@
   "manifest_version": 3,
   "name": "ChatGPT email object auto writer",
   "version": "1.0",
-  "description": "Ecrivez votre objet d'email automatiquement grâce à chatGPT",
+  "description": "Suggest an email object for your current GMAIL draft using ChatGPT",
+  "permissions": ["tabs", "activeTab", "commands", "storage"],
+  "host_permissions": ["<all_urls>"],
   "action": {
+    "default_title": "ChatGPT email object auto writer",
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab", "scripting", "storage"],
+  "commands": {
+    "suggest-email-object": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K"
+      },
+      "description": "Suggest an email object"
+    }
+  },
   "content_scripts": [
     {
+      "matches": ["https://mail.google.com/*"],
       "js": ["content.js"],
-      "matches": [
-        "https://developer.chrome.com/docs/extensions/*",
-        "https://developer.chrome.com/docs/webstore/*"
-      ]
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.js"],
+      "matches": ["*://mail.google.com/*"]
     }
   ]
 }
